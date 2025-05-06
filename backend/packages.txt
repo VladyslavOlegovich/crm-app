@@ -1,0 +1,3 @@
+npm install express mongoose bcryptjs jsonwebtoken axios dotenv
+npm install -D typescript ts-node nodemon
+npm install -D @types/express @types/node @types/bcryptjs @types/jsonwebtoken
