@@ -1,8 +1,10 @@
 import { create } from "zustand";
-import axios from "../../data/api";
 import { IUser } from "../../data/types/user";
 import { handleAxiosError } from "../../data/utils/handleAxiosError";
-
+import {
+  login as loginApi,
+  register as registerApi,
+} from "../../data/api/auth";
 interface AuthState {
   token: string | null;
   user: IUser | null;
@@ -17,9 +19,9 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   login: async (email: string, password: string) => {
     try {
-      const response = await axios.post("/auth/login", { email, password });
-      localStorage.setItem("token", response.data.token);
-      set({ token: response.data.token, user: response.data.user });
+      const data = await loginApi(email, password);
+      localStorage.setItem("token", data.token);
+      set({ token: data.token, user: data.user });
     } catch (error) {
       const errorMessage = handleAxiosError(error, "Login failed");
       console.error("Login error:", errorMessage);
@@ -29,14 +31,11 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   register: async (email: string, password: string) => {
     try {
-      const response = await axios.post("/auth/register", {
-        email,
-        password,
-      });
-      localStorage.setItem("token", response.data.token);
-      set({ token: response.data.token, user: response.data.user });
+      const data = await registerApi(email, password);
+      localStorage.setItem("token", data.token);
+      set({ token: data.token, user: data.user });
     } catch (error) {
-      const errorMessage = handleAxiosError(error, "Login failed");
+      const errorMessage = handleAxiosError(error, "Registration failed");
       console.error("Registration failed", errorMessage);
 
       throw new Error(errorMessage);
