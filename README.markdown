@@ -79,7 +79,7 @@ This is a full-stack application for managing GitHub repositories and user authe
   - Body: `{ email: string, password: string }`
   - Response: `{ token: string, user: { _id: string, email: string } }`
   - Status: 200
-- **POST `/api/repos`**: Add a GitHub repository.
+- **POST `/api/repos/add`**: Add a GitHub repository.
   - Headers: `Authorization: Bearer <token>`
   - Body: `{ path: string }`
   - Response: `{ ...repository }`
