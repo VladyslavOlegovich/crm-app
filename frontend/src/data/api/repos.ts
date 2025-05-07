@@ -4,7 +4,7 @@ import { IRepository } from "../types/repo";
 
 export const addRepo = async (path: string): Promise<IRepository> => {
   try {
-    const response = await axios.post<IRepository>("/repos", { path });
+    const response = await axios.post<IRepository>("/repos/add", { path });
     return response.data;
   } catch (error) {
     throw new Error("Failed to add repository. Please try again.");

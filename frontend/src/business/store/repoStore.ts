@@ -1,7 +1,12 @@
 import { create } from "zustand";
-import axios from "../../data/api";
 import { IRepository } from "../../data/types/repo";
 import { handleAxiosError } from "../../data/utils/handleAxiosError";
+import {
+  getRepos as getReposApi,
+  addRepo as addRepoApi,
+  updateRepo as updateRepoApi,
+  deleteRepo as deleteRepoApi,
+} from "../../data/api/repos";
 
 interface RepoState {
   repos: IRepository[];
@@ -26,8 +31,8 @@ export const useRepoStore = create<RepoState>((set) => ({
   fetchRepos: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.get("/repos");
-      set({ repos: response.data, loading: false });
+      const data = await getReposApi();
+      set({ repos: data, loading: false });
     } catch (error) {
       const errorMessage = handleAxiosError(
         error,
@@ -45,9 +50,9 @@ export const useRepoStore = create<RepoState>((set) => ({
     set({ loading: true, error: null });
     try {
       const { path } = useRepoStore.getState();
-      const response = await axios.post("/repos/add", { path });
+      const data = await addRepoApi(path);
       set((state) => ({
-        repos: [...state.repos, response.data],
+        repos: [...state.repos, data],
         path: "",
         loading: false,
       }));
@@ -67,11 +72,9 @@ export const useRepoStore = create<RepoState>((set) => ({
   updateRepo: async (id) => {
     set({ loading: true, error: null });
     try {
-      const response = await axios.put(`/repos/${id}`);
+      const data = await updateRepoApi(id);
       set((state) => ({
-        repos: state.repos.map((repo) =>
-          repo._id === id ? response.data : repo
-        ),
+        repos: state.repos.map((repo) => (repo._id === id ? data : repo)),
         loading: false,
       }));
     } catch (error) {
@@ -90,7 +93,7 @@ export const useRepoStore = create<RepoState>((set) => ({
   deleteRepo: async (id) => {
     set({ loading: true, error: null });
     try {
-      await axios.delete(`/repos/${id}`);
+      await deleteRepoApi(id);
       set((state) => ({
         repos: state.repos.filter((repo) => repo._id !== id),
         loading: false,
