@@ -1,20 +1,3 @@
-# services:
-#   mongo:
-#     image: mongo:6
-#     container_name: mongo
-#     ports:
-#       - "27017:27017"
-#     volumes:
-#       - mongo-data:/data/db
-#     networks:
-#       - backend-network
-
-# volumes:
-#   mongo-data:
-
-# networks:
-#   backend-network:
-
 services:
   mongo:
     image: mongo:6
@@ -28,13 +11,13 @@ services:
 
   backend:
     build:
-      context: ./backend # Шлях до папки з бекендом і Dockerfile
+      context: ./backend 
       dockerfile: Dockerfile
     container_name: backend
     ports:
-      - "5000:5000" # Мапимо порт 3000 хоста на 3000 контейнера
+      - "5000:5000" 
     depends_on:
-      - mongo # Бекенд залежить від MongoDB
+      - mongo 
     env_file:
       - ./backend/.env
     networks:

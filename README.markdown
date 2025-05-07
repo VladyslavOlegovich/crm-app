@@ -38,7 +38,7 @@ This is a full-stack application for managing GitHub repositories and user authe
      ```
      PORT=5000
      JWT_SECRET=your-secret-key
-     MONGODB_URI=mongodb://localhost:27017/crm
+     MONGODB_URI=mongodb://mongo:27017/crm
      ```
    - Ensure `MONGODB_URI` matches your MongoDB setup if not using Docker.
 
