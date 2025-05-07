@@ -71,11 +71,11 @@ This is a full-stack application for managing GitHub repositories and user authe
 
 ## API Endpoints
 
-- **POST `/api/register`**: Register a new user.
+- **POST `/api/auth/register`**: Register a new user.
   - Body: `{ email: string, password: string }`
   - Response: `{ token: string, user: { _id: string, email: string } }`
   - Status: 201
-- **POST `/api/login`**: Login a user.
+- **POST `/api/auth/login`**: Login a user.
   - Body: `{ email: string, password: string }`
   - Response: `{ token: string, user: { _id: string, email: string } }`
   - Status: 200
